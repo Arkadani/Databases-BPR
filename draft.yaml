@@ -1,0 +1,271 @@
+models:
+ User:
+   id: integer
+   username: string
+   role: string
+   employee_id: string
+   created_at: timestamp
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrEmployee:
+   ID: integer
+   NIK: string
+   NAMA: text
+   AO_CODE: integer
+   BLOOD_TYPE: string
+   GENDER: string
+   PENDIDIKAN: string
+   UNIVERSITAS: string
+   JURUSAN: string
+   IPK: string
+   IBU_KANDUNG: string
+   STATUS_KARYAWAN: string
+   NAMA_PASANGAN: string
+   TANGGUNAN: string
+   NO_KTP: string
+   NAMA_KTP: string
+   ALAMAT_KTP: string
+   SECTOR_KTP: string
+   DISTRICT_KTP: string
+   SUB_DISTRICT_KTP: string
+   ALAMAT_TINGGAL: string
+   SECTOR_TINGGAL: string
+   DISTRICT_TINGGAL: string
+   SUB_DISTRICT_TINGGAL: string
+   TGL_LAHIR: date
+   TEMPAT_LAHIR: string
+   AGAMA: string
+   TELP: string
+   HP: string
+   NO_REK_CF: string
+   NO_REK_TF: string
+   EMAIL: string
+   NPWP: string
+   SUMBER_LOKER: string
+   KET_LOKER: string
+   INTERVIEW: string
+   TGL_KELUAR: string
+   ALASAN_KELUAR: string
+   CUTI: string
+   PHOTO_LOC: string
+   SPV: string
+   STATUS_MST: string
+   relationships:
+     hasMany: "HrLeave, HrRolling, HrCv, HrNotes, HrAbsen, HrEmployeeDocument, HrOvertime, HrWarning, HrActivity, HrMainJob, HrJobSpec"
+
+ HrDivision:
+   ID: string
+   MASTER_NAME: string
+   UPPER_LEVEL: string
+   DESCRIPTION: string
+
+ HrPosition:
+   ID: string
+   MASTER_NAME: string
+   UPPER_LEVEL: string
+   DESCRIPTION: string
+   relationships:
+     hasMany: "JobDesk"
+
+ HrRolling:
+   ID: string
+   NIK: string
+   TANGGAL: date
+   BAGIAN: string
+   KANTOR: string
+   STATUS: string
+   GRADE: string
+   TGL_SK: date
+   NO_SK: string
+   SPV: string
+   relationships:
+     belongsTo: "HrEmployee, HrPosition"
+
+ HrCv:
+   ID: string
+   NIK: string
+   NAMA_PERUSAHAAN: string
+   ALAMAT_PERUSAHAAN: string
+   BIDANG: string
+   MASUK: date
+   KELUAR: date
+   GAJI: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrLeave:
+   id: string
+   employee_id: string
+   leave_date_start: date
+   leave_data_end: date
+   leave_type: string
+   attachment: string
+   reason: string
+   substitute: string
+   SPV: string
+   SPV_NOTE: string
+   SPV_LOG: string
+   HR: string
+   HR_NOTE: string
+   HR_LOG: string
+   relationships:
+     belongsTo: "HrEmployee, HrLeaveType"
+
+ HrLeaveType:
+   ID: string
+   type: string
+   name: string
+   cut_flag: string
+   day_count: integer
+   relationships:
+     hasMany: "HrLeave"
+
+ HrTraining:
+   ID: string
+   MATERI: string
+   JENIS: string
+   START_DATE: date
+   END_DATE: date
+   KETERANGAN: string
+   LEVEL: string
+   SPEAKER: string
+
+ HrNotes:
+   ID: string
+   NIK: string
+   TANGGAL: string
+   CATATAN: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrInsurance:
+   ID: string
+   NIK: string
+   NO_PESERTA: string
+   TGL_TERBIT: string
+   TGL_BERAKHIR: string
+   JENIS: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrAbsen:
+   ID: string
+   EMPLOYEE_ID: string
+   TANGGAL: date
+   JAM: string
+   jenis_absen: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrOfficeHour:
+   ID: string
+   employee_id: string
+   jam_masuk: string
+   jam_pulang: string
+   limit_jam_masuk: string
+   limit_jam_pulang: string
+   jam_istirahat_mulai: string
+   jam_istirahat_pulang: string
+   break_flag: string
+   entry_flag: string
+   exit_flag: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrEmployeeDocument:
+   ID: string
+   NIK: string
+   doc_path: string
+   doc_type: string
+   upload_date: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrOvertime:
+   ID: string
+   employee_id: string
+   overtime_date_start: string
+   overtime_date_end: string
+   overtime_type: string
+   reason: string
+   SPV: string
+   SPV_NOTE: string
+   HR: string
+   HR_NOTE: string
+   HR_LOG: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrWarning:
+   ID: string
+   warning_date: date
+   employee_id: string
+   rules_id: string
+   warning_type: string
+   punishment: string
+   descr: string
+   supervisor_flag: string
+   supervisor_date: date
+   hr_flag: string
+   hr_date: string
+   relationships:
+     belongsTo: "HrEmployee"
+
+ HrJobSpec:
+   ID: string
+   EMPLOYEE_ID: string
+   JOB_SPEC: string
+
+ HrDayOff:
+   id: string
+   day_off: string
+   name: string
+   type: string
+   cur_flag: string
+   descr: string
+
+ HrActivity:
+   ID: string
+   EMPLOYEE_ID: string
+   JOB_ID: string
+   VAL_DATE: string
+   INPUT_DATE: datetime
+   VAL: decimal
+   DESCR: string
+   APPROVAL_FLAG: string
+   APPROVAL_TIME: datetime
+   relationships:
+     belongsTo: "HrEmployee, JobDesk"
+
+ JobDesk:
+   ID: string
+   HR_POSITION_ID: string
+   JOB_DESK: string
+   TARGET: float
+   STATUS: string
+   DESCR: string
+   DEFAULT_PCT: float
+   relationships:
+     belongsTo: "HrPosition"
+     hasMany: "HrActivity, HrMainJob"
+
+ HrMainJob:
+   ID: string
+   employee_id: string
+   job_desk: string
+   relationships:
+     belongsTo: "JobDesk"
+
+ Request:
+   ID: string
+   REQUESTOR_ID: string
+   REQ_DATE: date
+   REQ_TASK: string
+   REQ_USE: string
+   REQ_FOR: string
+   REQ_DESC: string
+   PIC_ID: string
+   PIC_STATUS: string
+   PIC_DESC: string
+   RATING: integer
